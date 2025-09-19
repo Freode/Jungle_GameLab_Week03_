@@ -46,12 +46,12 @@ public class TechNodeUI : MonoBehaviour
 
         // 현재 보유한 바이트보다 요구량이 더 많으면, 무시
         int needByteValue = int.Parse(textByte.text);
-        int curByteValue = GameManager.instance.GetByteValue();
+        int curByteValue = GameManager.instance.GetCurByteValue();
         if (needByteValue > curByteValue)
             return;
 
         // 연구 해제 완료
-        GameManager.instance.AddByteValue(-1 * needByteValue);
+        GameManager.instance.AddCurByteValue(-1 * needByteValue);
 
         isUnlocked = true;
         TechNodeManager.instance.UnlockTech(techData);

@@ -14,9 +14,6 @@ public class ResearchSpawnPoint : MonoBehaviour
 {
     public List<SpawnInfo> spawnLists;
 
-    private float minSpawnTime = 5f;
-    private float maxSpawnTime = 15f;
-
     private int totalRate = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -51,7 +48,10 @@ public class ResearchSpawnPoint : MonoBehaviour
     // 스폰 대기까지 활성화
     IEnumerator WaitToSpawn()
     {
-        float spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
+        float curMinSpawnTime = GameManager.instance.GetFindByteMinPeriod();
+        float curMaxSpawnTime = GameManager.instance.GetFindByteMaxPeriod();
+
+        float spawnTime = Random.Range(curMinSpawnTime, curMaxSpawnTime);
         
         yield return new WaitForSeconds(spawnTime);
 

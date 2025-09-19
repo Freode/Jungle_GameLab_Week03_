@@ -22,3 +22,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3f3d9e37c5243164da1fbda9c552854a, type: 2}
   lineModify: 0
   positionUI: {x: 300, y: 0}
+  effects:
+  - {fileID: 11400000, guid: dd7fb095c69654d42ac1c43d5d9c2517, type: 2}

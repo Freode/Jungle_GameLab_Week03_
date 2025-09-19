@@ -155,9 +155,9 @@ public class TechNodeViewer : MonoBehaviour
         }
     }
 
-    public void SetByte(int value)
+    public void SetByte(int curValue, int maxValue)
     {
-        TextByte.text = "Byte : " + value.ToString();
+        TextByte.text = "바이트 : " + curValue.ToString() + " / " + maxValue.ToString();
     }
 
     // 연구창 닫기

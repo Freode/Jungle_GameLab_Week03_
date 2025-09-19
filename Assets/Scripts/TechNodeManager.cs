@@ -44,10 +44,14 @@ public class TechNodeManager : MonoBehaviour
         if (CanUnlockTech(tech) == false)
             return;
 
-        // TODO : 재화 차감 로직
-
         // 해금 목록에 추가
         unlockedNodes.Add(tech.name, tech);
+
+        // 해금 반영
+        foreach(var effect in tech.effects)
+        {
+            effect.ApplyTechEffect();
+        }
 
         // 태크트리 UI 갱신
         OnTechUnlocked?.Invoke(tech);

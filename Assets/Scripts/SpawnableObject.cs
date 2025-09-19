@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 
 public enum SpawnType
@@ -11,13 +11,13 @@ public enum SpawnType
 
 public class SpawnableObject : MonoBehaviour
 {
-    public SpawnType spawnType;                 // ÇöÀç ½ºÆùµÉ °´Ã¼ÀÇ Å¸ÀÔ
-    public int interactByteValue = 0;           // »óÈ£ÀÛ¿ë ½Ã, È¹µæÇÒ ¹ÙÀÌÆ®ÀÇ ¾ç
+    public SpawnType spawnType;                 // í˜„ì¬ ìŠ¤í°ë  ê°ì²´ì˜ íƒ€ì…
+    public int interactByteValue = 0;           // ìƒí˜¸ì‘ìš© ì‹œ, íšë“í•  ë°”ì´íŠ¸ì˜ ì–‘
 
-    public Vector3 baseScale;                   // ±âÁØÀÌ µÇ´Â ½ºÄÉÀÏ Å©±â
+    public Vector3 baseScale;                   // ê¸°ì¤€ì´ ë˜ëŠ” ìŠ¤ì¼€ì¼ í¬ê¸°
 
-    public float growthDuration = 0.5f;         // »ı¼ºµÇ´Âµ¥ °É¸®´Â ½Ã°£
-    private bool canInteract = false;           // »ı¼º ¿Ï·á ÈÄ, »óÈ£ÀÛ¿ë °¡´ÉÀ¸·Î º¯°æ
+    public float growthDuration = 0.5f;         // ìƒì„±ë˜ëŠ”ë° ê±¸ë¦¬ëŠ” ì‹œê°„
+    private bool canInteract = false;           // ìƒì„± ì™„ë£Œ í›„, ìƒí˜¸ì‘ìš© ê°€ëŠ¥ìœ¼ë¡œ ë³€ê²½
 
     private void Awake()
     {
@@ -37,12 +37,12 @@ public class SpawnableObject : MonoBehaviour
         
     }
 
-    // ½ºÆùµÈ °´Ã¼ ¼ºÀåÇÏ´Â ¾Ö´Ï¸ŞÀÌ¼Ç
+    // ìŠ¤í°ëœ ê°ì²´ ì„±ì¥í•˜ëŠ” ì• ë‹ˆë©”ì´ì…˜
     IEnumerator SpawnAnimate()
     {
         float elapsedTime = 0f;
         Vector3 targetScale = Vector3.one;
-        // ºÎ¸ğ ½ºÄÉÀÏ·Î ÀÎÇØ¼­ ½ºÄÉÀÏ Å©±â°¡ º¯ÇÏ´Â °ÍÀ» Á¶Á¤
+        // ë¶€ëª¨ ìŠ¤ì¼€ì¼ë¡œ ì¸í•´ì„œ ìŠ¤ì¼€ì¼ í¬ê¸°ê°€ ë³€í•˜ëŠ” ê²ƒì„ ì¡°ì •
         if (transform.parent != null)
         {
             Vector3 parentScale = transform.parent.lossyScale;
@@ -53,7 +53,7 @@ public class SpawnableObject : MonoBehaviour
             );
         }
 
-        // ½ºÄÉÀÏ Å°¿ì±â
+        // ìŠ¤ì¼€ì¼ í‚¤ìš°ê¸°
         while (elapsedTime < growthDuration)
         {
             transform.localScale = Vector3.Lerp(Vector3.zero, targetScale, elapsedTime / growthDuration);
@@ -64,20 +64,40 @@ public class SpawnableObject : MonoBehaviour
         transform.localScale = targetScale;
         canInteract = true;
 
-        // À§Çè ¿ä¼Ò°¡ ¾Æ´Ò¶§´Â ¹«½Ã
+        // ìœ„í—˜ ìš”ì†Œê°€ ì•„ë‹ë•ŒëŠ” ë¬´ì‹œ
         if (spawnType == SpawnType.Danger)
             StartCoroutine(AfterSpawn());
     }
 
-    // ¸¶¿ì½º Å¬¸¯ ÇÔ¼ö
+    // ë§ˆìš°ìŠ¤ í´ë¦­ í•¨ìˆ˜
     private void OnMouseDown()
     {
         if (canInteract == false)
             return;
 
-        // ÀÚ¿øÀÏ °æ¿ì, ¹ÙÀÌÆ® È¹µæ/ÀÒ¾î¹ö¸®±â
-        if(spawnType != SpawnType.Structure)
-            GameManager.instance.AddByteValue(interactByteValue);
+        switch(spawnType)
+        {
+            // ìì› - ë°”ì´íŠ¸ íšë“
+            case SpawnType.Resource:
+                int percent = GameManager.instance.GetFindBytesRate();
+                int minValue = interactByteValue + GameManager.instance.GetIncreaseFindByteMinValue();
+                int maxValue = minValue + (minValue * percent / 100);
+                int addValue = Random.Range(minValue, maxValue + 1);
+                GameManager.instance.AddCurByteValue(addValue);
+                break;
+
+            // êµ¬ì¡°ë¬¼ - ì •ë³´ í™•ì¸?
+            case SpawnType.Structure:
+                return;
+
+            // ìœ„í—˜ - ë°”ì´íŠ¸ ì†Œë©¸
+            case SpawnType.Danger:
+                GameManager.instance.AddCurByteValue(interactByteValue);
+                break;
+        }
+
+        // ìì›ì¼ ê²½ìš°, ë°”ì´íŠ¸ íšë“/ìƒì–´ë²„ë¦¬ê¸°
+
               
         Destroy(gameObject);
     }
@@ -87,7 +107,7 @@ public class SpawnableObject : MonoBehaviour
         float curWaitTime = 0f;
         float limitWaitTime = 10f;
 
-        // À§Çè ¿ä¼Ò´Â ÀÏÁ¤ ½Ã°£ÀÌ Áö³­ ÈÄ¿¡ ÀÚµ¿À¸·Î Á¦°Å
+        // ìœ„í—˜ ìš”ì†ŒëŠ” ì¼ì • ì‹œê°„ì´ ì§€ë‚œ í›„ì— ìë™ìœ¼ë¡œ ì œê±°
         while(curWaitTime < limitWaitTime)
         {
             curWaitTime += Time.deltaTime;
