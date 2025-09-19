@@ -40,12 +40,22 @@ public class TechNodeUI : MonoBehaviour
     {
         bool checkUnlock = TechNodeManager.instance.CanUnlockTech(techData);
 
-        if (checkUnlock)
-        {
-            isUnlocked = true;
-            TechNodeManager.instance.UnlockTech(techData);
-            UnlockVisualNode();
-        }
+        // 잠금 해제 불가능하면, 무시
+        if (checkUnlock == false)
+            return;
+
+        // 현재 보유한 바이트보다 요구량이 더 많으면, 무시
+        int needByteValue = int.Parse(textByte.text);
+        int curByteValue = GameManager.instance.GetByteValue();
+        if (needByteValue > curByteValue)
+            return;
+
+        // 연구 해제 완료
+        GameManager.instance.AddByteValue(-1 * needByteValue);
+
+        isUnlocked = true;
+        TechNodeManager.instance.UnlockTech(techData);
+        UnlockVisualNode();
     }       
 
     // 연구 가능 상태로 변경

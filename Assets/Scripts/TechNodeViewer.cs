@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -16,6 +17,9 @@ public class TechNodeViewer : MonoBehaviour
     // 연결선 방향 표시기
     public GameObject ArrowHeadPrefab;
 
+    // Byte 표시
+    public TextMeshProUGUI TextByte;
+
     // 프로젝트에 있는 모든 TechNodeEach 에셋들을 담을 리스트
     public List<TechNodeEach> allTechNodes;
 
@@ -26,11 +30,13 @@ public class TechNodeViewer : MonoBehaviour
     {
         GenerateTree();
         TechNodeManager.instance.OnTechUnlocked += OnTechUnlocked;
+        GameManager.instance.OnByteTextValueChanged += SetByte;
     }
 
     void OnDestroy()
     {
         TechNodeManager.instance.OnTechUnlocked -= OnTechUnlocked;
+        GameManager.instance.OnByteTextValueChanged -= SetByte;
     }
 
     // 1. 모든 노드 UI 생성
@@ -138,5 +144,15 @@ public class TechNodeViewer : MonoBehaviour
         {
             techNodesUI[techUINode.name].UpdateVisuals();
         }
+    }
+
+    public void SetByte(int value)
+    {
+        TextByte.text = "Byte : " + value.ToString();
+    }
+
+    public void OnExitButtonClicked()
+    {
+
     }
 }
