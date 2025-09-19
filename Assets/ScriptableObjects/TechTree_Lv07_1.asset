@@ -18,4 +18,11 @@ MonoBehaviour:
   requiredByteValue: 25
   preRequisites:
   - {fileID: 11400000, guid: b233d201f39d15443af68ccc63e51d09, type: 2}
+  nextSkills:
+  - {fileID: 11400000, guid: 7cdb6ab1276ae8641af43ab113536bf1, type: 2}
+  - {fileID: 11400000, guid: c4e0f7d766542d14d89bc6392c5ed9b9, type: 2}
+  - {fileID: 11400000, guid: c9fa3b6494415be4eb8169a23643b506, type: 2}
+  - {fileID: 11400000, guid: d013a209a7a07a44e9b65c68ae70406a, type: 2}
+  - {fileID: 11400000, guid: 56a5e78586d9c634fbb66663deff6287, type: 2}
+  lineModify: 0
   positionUI: {x: 1500, y: 0}

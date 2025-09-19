@@ -21,6 +21,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 36c0073b77e3bed4c90cfe0196499039, type: 2}
   - {fileID: 11400000, guid: 81a3f6a4433b1594fa92ccb6272ef887, type: 2}
   - {fileID: 11400000, guid: ed38b9c6a9e107b4a8a31b0527b7a311, type: 2}
+  nextSkills:
+  - {fileID: 11400000, guid: 026fbea4d24c42143905505ab2fbbbb3, type: 2}
+  - {fileID: 11400000, guid: 7d26d76844c7c2a44b9c24b7da45ac49, type: 2}
+  - {fileID: 11400000, guid: 82065933b583a7b4bb4456c2f042cbaf, type: 2}
+  - {fileID: 11400000, guid: 06e5b5bfe1b5df24fbeeb9b08c0c2772, type: 2}
   lineModify: 125
   positionUI: {x: 4350, y: 0}
-  canUnlockOr: 0
