@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5886da5021858545b2614967e5133a7, type: 3}
   m_Name: AddFindByteMaxPeriodLv_1
   m_EditorClassIdentifier: 
-  increaseMaxPeriodValue: 0
+  increaseMaxPeriodValue: 1

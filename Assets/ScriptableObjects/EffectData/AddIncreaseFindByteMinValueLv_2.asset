@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3db7f4fe1ff6390499d044ef5dd0d5fb, type: 3}
   m_Name: AddIncreaseFindByteMinValueLv_2
   m_EditorClassIdentifier: 
-  increaseFindByteMinValue: 0
+  increaseFindByteMinValue: 10

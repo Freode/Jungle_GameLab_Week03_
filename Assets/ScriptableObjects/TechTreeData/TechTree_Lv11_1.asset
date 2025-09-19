@@ -15,7 +15,7 @@ MonoBehaviour:
   techName: 116
   techNamePrint: "\uB300\uD615 \uD50C\uB7AB\uD3FC"
   description: "\uBC14\uC774\uD2B8 \uC800\uC7A5\uB7C9 \uC99D\uAC00"
-  requiredByteValue: 25
+  requiredByteValue: 375
   preRequisites:
   - {fileID: 11400000, guid: 56a5e78586d9c634fbb66663deff6287, type: 2}
   - {fileID: 11400000, guid: c4e0f7d766542d14d89bc6392c5ed9b9, type: 2}
@@ -30,3 +30,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5c7792b8d189501418ce524daabba7f5, type: 2}
   lineModify: 125
   positionUI: {x: 3000, y: 0}
+  effects: []

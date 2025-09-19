@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum SpawnType
@@ -12,7 +13,7 @@ public enum SpawnType
 public class SpawnableObject : MonoBehaviour
 {
     public SpawnType spawnType;                 // 현재 스폰될 객체의 타입
-    public int interactByteValue = 0;           // 상호작용 시, 획득할 바이트의 양
+    public List<int> interactByteValue;         // 상호작용 시, 획득할 바이트의 양
 
     public Vector3 baseScale;                   // 기준이 되는 스케일 크기
 
@@ -75,13 +76,18 @@ public class SpawnableObject : MonoBehaviour
         if (canInteract == false)
             return;
 
-        switch(spawnType)
+        int stageNum = (int)GameManager.instance.GetStage();
+        switch (spawnType)
         {
             // 자원 - 바이트 획득
             case SpawnType.Resource:
+                // 공식
+                // 최소 바이트 = (행성 바이트 + 바이트 추가 획득) * 바이트 추가 획득 / 2
+                // 최대 바이트 = (행성 바이트 + 바이트 추가 획득) * 바이트 추가 획득
                 int percent = GameManager.instance.GetFindBytesRate();
-                int minValue = interactByteValue + GameManager.instance.GetIncreaseFindByteMinValue();
+                int minValue = interactByteValue[stageNum] + GameManager.instance.GetIncreaseFindByteMinValue();
                 int maxValue = minValue + (minValue * percent / 100);
+                minValue = (minValue + maxValue) / 2;
                 int addValue = Random.Range(minValue, maxValue + 1);
                 GameManager.instance.AddCurByteValue(addValue);
                 break;
@@ -92,13 +98,10 @@ public class SpawnableObject : MonoBehaviour
 
             // 위험 - 바이트 소멸
             case SpawnType.Danger:
-                GameManager.instance.AddCurByteValue(interactByteValue);
+                GameManager.instance.AddCurByteValue(-1 * interactByteValue[stageNum]);
                 break;
         }
-
-        // 자원일 경우, 바이트 획득/잃어버리기
-
-              
+  
         Destroy(gameObject);
     }
 

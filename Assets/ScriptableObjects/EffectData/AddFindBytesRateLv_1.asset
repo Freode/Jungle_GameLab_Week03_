@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eab0974e60da93147878fc1f764b9390, type: 3}
   m_Name: AddFindBytesRateLv_1
   m_EditorClassIdentifier: 
-  increaseRate: 0
+  increaseRate: 10

@@ -15,9 +15,10 @@ MonoBehaviour:
   techName: 101
   techNamePrint: "\uD14C\uB354"
   description: "\uAD6C\uC5ED \uD655\uC7A5"
-  requiredByteValue: 5
+  requiredByteValue: 10
   preRequisites: []
   nextSkills:
   - {fileID: 11400000, guid: 58b44b3638e55cc4fbc7b68de7b8dd1e, type: 2}
   lineModify: 0
   positionUI: {x: -300, y: 0}
+  effects: []

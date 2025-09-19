@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b246f44259fbffc478f39109588d76f9, type: 3}
   m_Name: AddFindByteMinPeriodLv_1
   m_EditorClassIdentifier: 
+  increaseMinPeriodValue: 0.5

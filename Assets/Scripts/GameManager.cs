@@ -17,13 +17,18 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public event System.Action<int, int> OnByteTextValueChanged;
+    public event System.Action OnPlanetChanged;
 
     public List<int> reduceBytes;           // 행성에 따른 바이트 소모량 차별화
     public float byteZeroTimeLimit = 15f;   // 바이트가 0으로 유지되는 한계점
 
+    public GameObject planetFloor;          // 행성 바닥
+    public List<Material> planetMaterials;  // 행성 바닥 머티리얼
+
     private Planet stage = Planet.Sylva;    // 현재 스테이지
+    private string stageName = "실바";      // 현재 스테이지의 이름
     private int curByteValue = 60;          // 현재 바이트 소유량
-    private int maxByteValue = 500;         // 최대 바이트 소유량
+    private int maxByteValue = 150;         // 최대 바이트 소유량
     private float byteZeroTime = 0f;        // 바이트가 0으로 유지되는 시간
 
     private bool isGameStart = false;       // 게임이 시작되었는지 확인
@@ -63,7 +68,7 @@ public class GameManager : MonoBehaviour
     // 매 1초마다 행성에 맞는 바이트 수 감소
     IEnumerator ReduceByte()
     {
-        while(isGameOver == false)
+        while (isGameOver == false)
         {
             yield return new WaitForSeconds(1f);
 
@@ -105,7 +110,7 @@ public class GameManager : MonoBehaviour
             curByteValue = 0;
 
         // 최대량
-        if(curByteValue > maxByteValue)
+        if (curByteValue > maxByteValue)
             curByteValue = maxByteValue;
 
         // 바이트 변경에 따른 업데이트
@@ -121,6 +126,36 @@ public class GameManager : MonoBehaviour
 
         // 바이트 변경에 따른 업데이트
         OnByteTextValueChanged?.Invoke(curByteValue, maxByteValue);
+    }
+
+    // 현재 스테이지 설정
+    public void SetCurrentPlanet(Planet newPlanet)
+    {
+        if (stage == newPlanet)
+            return;
+
+        SetStage(newPlanet);
+        switch(newPlanet)
+        {
+            case Planet.Sylva:
+                stageName = "실바";
+                break;
+            case Planet.Desolo:
+                stageName = "데솔로";
+                break;
+            case Planet.Glacio:
+                stageName = "글라시오";
+                break;
+            case Planet.Atrox:
+                stageName = "아트록스";
+                break;
+        }
+
+        // 행성 바닥 색상 변경
+        MeshRenderer meshRenderer = planetFloor.GetComponent<MeshRenderer>();
+        meshRenderer.material = planetMaterials[(int)stage];
+
+        OnPlanetChanged?.Invoke();
     }
 
     // 몇 초간 바이트가 0으로 유지되는지 확인
@@ -181,4 +216,17 @@ public class GameManager : MonoBehaviour
     public float GetFindByteMinPeriod() { return findByteMinPeriod; }
     public float GetFindByteMaxPeriod() { return findByteMaxPeriod; }
     public int GetIncreaseFindByteMinValue() { return increaseFindBytMinValue; }
+
+    // 데솔로로 이동 가능 여부
+    public void SetCanGoDesolo() { canGoDesolo = true; }
+    public bool GetCanGoDesolo() { return canGoDesolo; }
+    // 글라시오로 이동 가능 여부
+    public void SetCanGoGlaclo() { canGoGlaclo = true; }
+    public bool GetCanGoGlaclo() { return canGoGlaclo; }
+    // 아트록스로 이동 가능 여부
+    public void SetCanGoAtrox() { canGoAtrox = true; }
+    public bool GetCanGoAtrox() { return canGoAtrox; }
+
+    // 스테이지 이름을 반환
+    public string GetCurStageName() { return stageName; }
 }

@@ -151,6 +151,10 @@ public class TechNodeViewer : MonoBehaviour
         // 해금된 노드와 이제 해금 가능해진 노드들의 시각적 상태 업데이트
         foreach (var techUINode in unlockedTech.nextSkills)
         {
+            // 이미 해금된 노드는 무시
+            if (TechNodeManager.instance.unlockedNodes.ContainsKey(techUINode.name))
+                continue;
+
             techNodesUI[techUINode.name].UpdateVisuals();
         }
     }
@@ -163,6 +167,7 @@ public class TechNodeViewer : MonoBehaviour
     // 연구창 닫기
     public void OnExitButtonClicked()
     {
+        Time.timeScale = 1f;
         gameObject.SetActive(false);
         ImageBlock.gameObject.SetActive(false);
     }
@@ -170,6 +175,7 @@ public class TechNodeViewer : MonoBehaviour
     // 연구창 열기
     public void OnOpenButtonClikcked()
     {
+        Time.timeScale = 0f;
         gameObject.SetActive(true);
         ImageBlock.gameObject.SetActive(true);
     }

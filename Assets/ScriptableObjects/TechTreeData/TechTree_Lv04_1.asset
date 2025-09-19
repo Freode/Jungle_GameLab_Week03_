@@ -14,11 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   techName: 104
   techNamePrint: "\uC18C\uD615 \uC5F0\uAD6C\uC2E4"
-  description: "\uBC14\uC774\uD2B8 \uC800\uC7A5\uB7C9 \uC99D\uAC00"
-  requiredByteValue: 25
+  description: "\uBC14\uC774\uD2B8 \uBC1C\uACAC\uB7C9\uC758 \uCD5C\uB313\uAC12\uC744
+    10% \uC99D\uAC00"
+  requiredByteValue: 45
   preRequisites:
   - {fileID: 11400000, guid: 27937505ee99327418be6c538e72b173, type: 2}
   nextSkills:
   - {fileID: 11400000, guid: dd1eab931c003cc48a2c0b6f0695ab8b, type: 2}
   lineModify: 0
   positionUI: {x: 600, y: 0}
+  effects:
+  - {fileID: 11400000, guid: 47434530f8c81c34e9c8cc77400c0a33, type: 2}

@@ -122,6 +122,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnType: 0
-  interactByteValue: 50
+  interactByteValue: 0a000000190000002f00000073000000
   baseScale: {x: 5, y: 5, z: 5}
   growthDuration: 0.5

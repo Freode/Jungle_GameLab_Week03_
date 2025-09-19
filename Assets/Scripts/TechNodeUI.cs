@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class TechNodeUI : MonoBehaviour
 {
@@ -19,6 +20,11 @@ public class TechNodeUI : MonoBehaviour
     public void Awake()
     {
         buttonOutline = gameObject.GetComponent<Outline>();
+    }
+
+    private void Update()
+    {
+        UpdateCanLockVisualNode();
     }
 
     public void SetData(TechNodeEach tech)
@@ -54,6 +60,7 @@ public class TechNodeUI : MonoBehaviour
         GameManager.instance.AddCurByteValue(-1 * needByteValue);
 
         isUnlocked = true;
+        canUnlock = false;
         TechNodeManager.instance.UnlockTech(techData);
         UnlockVisualNode();
     }       
@@ -62,6 +69,26 @@ public class TechNodeUI : MonoBehaviour
     public void SetCanLock()
     {
         canUnlock = true;
+    }
+
+    // 연구 가능 상태로 변경되었을 때, 바이트 양에 따라 구매 가능 여부를 색상으로 표현
+    private void UpdateCanLockVisualNode()
+    {
+        if (canUnlock == false)
+            return;
+
+        int curByte = GameManager.instance.GetCurByteValue();
+
+        if (curByte >= techData.requiredByteValue)
+        {
+            buttonOutline.effectColor = Color.yellow;
+            unlockButton.interactable = true;
+        }
+        else
+        {
+            buttonOutline.effectColor = Color.red;
+            unlockButton.interactable = false;
+        }
     }
 
     // 노드의 상태에 따라 시각적 요소를 업데이트
@@ -85,7 +112,8 @@ public class TechNodeUI : MonoBehaviour
         if(canUnlock != canUnlockL)
         {
             canUnlock = canUnlockL;
-            CanLockVisualNode();
+            buttonOutline.effectColor = Color.yellow;
+            unlockButton.interactable = true;
         }
     }
 
@@ -93,11 +121,5 @@ public class TechNodeUI : MonoBehaviour
     {
         buttonOutline.effectColor = Color.green;
         unlockButton.interactable = false;
-    }
-
-    public void CanLockVisualNode()
-    {
-        buttonOutline.effectColor = canUnlock ? Color.yellow : Color.red;
-        unlockButton.interactable = canUnlock;
     }
 }
