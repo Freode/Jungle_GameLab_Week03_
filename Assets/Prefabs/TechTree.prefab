@@ -860,6 +860,7 @@ MonoBehaviour:
   ArrowBodyPrefab: {fileID: 7658829542336132701, guid: fc5c2d16790f80948b4001f0bb3bb390, type: 3}
   ArrowHeadPrefab: {fileID: 7501669935779508774, guid: 3a5bd660e58c9ac409835829dec2dbd7, type: 3}
   TextByte: {fileID: 2641980532851268156}
+  ExitButton: {fileID: 2752598732788024730}
   allTechNodes:
   - {fileID: 11400000, guid: 4ee4d83a2dd757543a61a0f8dc7b36f3, type: 2}
   - {fileID: 11400000, guid: 58b44b3638e55cc4fbc7b68de7b8dd1e, type: 2}

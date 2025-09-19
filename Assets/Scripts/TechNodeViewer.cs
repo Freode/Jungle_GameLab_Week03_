@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TechNodeViewer : MonoBehaviour
 {
@@ -20,17 +21,25 @@ public class TechNodeViewer : MonoBehaviour
     // Byte 표시
     public TextMeshProUGUI TextByte;
 
+    // 테크트리 닫기 화면
+    public Button ExitButton;
+
+    // 다른 UI 상호작용 방지 블럭 생성
+    public Image ImageBlock;
+
     // 프로젝트에 있는 모든 TechNodeEach 에셋들을 담을 리스트
     public List<TechNodeEach> allTechNodes;
 
     // 테크트리 이름별로 가지는 UI 노드들 저장
     private Dictionary<string, TechNodeUI> techNodesUI = new Dictionary<string, TechNodeUI>();
 
+
     void Start()
     {
         GenerateTree();
         TechNodeManager.instance.OnTechUnlocked += OnTechUnlocked;
         GameManager.instance.OnByteTextValueChanged += SetByte;
+        ExitButton.onClick.AddListener(OnExitButtonClicked);
     }
 
     void OnDestroy()
@@ -151,8 +160,17 @@ public class TechNodeViewer : MonoBehaviour
         TextByte.text = "Byte : " + value.ToString();
     }
 
+    // 연구창 닫기
     public void OnExitButtonClicked()
     {
+        gameObject.SetActive(false);
+        ImageBlock.gameObject.SetActive(false);
+    }
 
+    // 연구창 열기
+    public void OnOpenButtonClikcked()
+    {
+        gameObject.SetActive(true);
+        ImageBlock.gameObject.SetActive(true);
     }
 }

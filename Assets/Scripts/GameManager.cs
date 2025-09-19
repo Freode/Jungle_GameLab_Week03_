@@ -85,8 +85,8 @@ public class GameManager : MonoBehaviour
     public void AddByteValue(int val)
     {
         byteValue += val;
-        //if (byteValue < 0)
-        //    byteValue = 0;
+        if (byteValue < 0)
+            byteValue = 0;
 
         // 바이트 변경에 따른 업데이트
         OnByteTextValueChanged?.Invoke(byteValue);
