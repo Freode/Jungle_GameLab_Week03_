@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: TechTree_Lv02_1
   m_EditorClassIdentifier: 
   techName: 102
-  techNamePrint: "\uC18C\uD615 \uBC1C\uC804\uAE30"
-  description: "\uBC14\uC774\uD2B8 \uAC10\uC18C\uB7C9 \uAC10\uC18C"
+  techNamePrint: "\uC18C\uD615 \uC5F0\uAD6C\uC18C"
+  description: "\uBC14\uC774\uD2B8 \uBC1C\uACAC\uB7C9\uC758 \uCD5C\uB313\uAC12\uC744
+    10% \uC99D\uAC00"
   requiredByteValue: 15
   preRequisites:
   - {fileID: 11400000, guid: 4ee4d83a2dd757543a61a0f8dc7b36f3, type: 2}
@@ -23,4 +24,5 @@ MonoBehaviour:
   lineModify: 0
   positionUI: {x: 0, y: 0}
   effects:
-  - {fileID: 11400000, guid: 1de8cfc2134733e469e31cb873d65674, type: 2}
+  - {fileID: 11400000, guid: 47434530f8c81c34e9c8cc77400c0a33, type: 2}
+  - {fileID: 11400000, guid: ddc4c2d5874754148868fadde4f75d05, type: 2}

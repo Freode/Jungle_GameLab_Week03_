@@ -18,9 +18,9 @@ MonoBehaviour:
   requiredByteValue: 200
   preRequisites:
   - {fileID: 11400000, guid: 9425a4b4a6cc70e41a6e374d0f98c573, type: 2}
-  nextSkills:
-  - {fileID: 11400000, guid: 9264b39b93a03a14d8f488ebe436010c, type: 2}
-  lineModify: 125
-  positionUI: {x: 1950, y: -300}
+  nextSkills: []
+  lineModify: 0
+  positionUI: {x: 1800, y: -300}
   effects:
   - {fileID: 11400000, guid: c564a472aa2588f459dfea907d48cf03, type: 2}
+  - {fileID: 11400000, guid: 0f61b7280d52264409e4fc414f4f2697, type: 2}

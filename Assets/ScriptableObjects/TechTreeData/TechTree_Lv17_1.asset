@@ -20,6 +20,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e55e44ccd39976343a5006e173014ac3, type: 2}
   nextSkills: []
   lineModify: 0
-  positionUI: {x: 5700, y: -300}
+  positionUI: {x: 4500, y: -300}
   effects:
   - {fileID: 11400000, guid: b69362e6faf80b34f9ffb7cbbcd44489, type: 2}

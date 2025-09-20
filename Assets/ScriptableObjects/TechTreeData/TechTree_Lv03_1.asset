@@ -24,3 +24,4 @@ MonoBehaviour:
   positionUI: {x: 300, y: 0}
   effects:
   - {fileID: 11400000, guid: dd7fb095c69654d42ac1c43d5d9c2517, type: 2}
+  - {fileID: 11400000, guid: aeac40740bc16f441a6664a25da8b41d, type: 2}

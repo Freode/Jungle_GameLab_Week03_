@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public bool isTestMode = false;         // 테스트 모드
+
     public event System.Action<int, int> OnByteTextValueChanged;
     public event System.Action OnPlanetChanged;
 
@@ -44,18 +46,45 @@ public class GameManager : MonoBehaviour
     private bool canGoGlaclo = false;       // 글라시오로 이동 가능 여부
     private bool canGoAtrox = false;        // 아트록스로 이동 가능 여부
 
-    // 코어 구매 목록들
-    private List<bool> corePurchaseList = new List<bool>(4);
+    public List<bool> corePurchaseList;     // 코어 구매 목록들
+    public GameObject structureParent;      // 구조물의 부모 프리팹
+    private List<GameObject> structures;    // 활성화할 구조물 목록들
 
     private void Awake()
     {
         instance = this;
+        SetTestMode();
+    }
+
+    // 테스트 모드
+    private void SetTestMode()
+    {
+        if (isTestMode == false)
+            return;
+
+        maxByteValue = 300000;
+        curByteValue = 300000;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         StartCoroutine(Init());
+
+        findAllStructures();
+    }
+
+    // 모든 구조물을 찾기
+    private void findAllStructures()
+    {
+        structures = new List<GameObject>();
+        int count = structureParent.transform.childCount;
+
+        for(int i = 0; i < count; i++)
+        {
+            Transform child = structureParent.transform.GetChild(i);
+            structures.Add(child.gameObject);
+        }
     }
 
     // 일정 시간 지난 후에 초기화
@@ -144,7 +173,7 @@ public class GameManager : MonoBehaviour
                 stageName = "실바";
                 break;
             case Planet.Desolo:
-                stageName = "데솔로";
+                stageName = "데슬로";
                 break;
             case Planet.Glacio:
                 stageName = "글라시오";
@@ -183,6 +212,40 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("게임 클리어!");
         }
+    }
+
+    // 활성화된 건물 등장 효과 실행
+    public void ActiveStructures(GameObject structurePrefab)
+    {
+        foreach(GameObject structure in structures)
+        {
+            if (structure.name.Contains(structurePrefab.name) == false)
+                continue;
+
+            structure.transform.localScale = Vector3.zero;
+            structure.SetActive(true);
+            StartCoroutine(StructureScaleUp(structure));
+        }
+    }
+
+    // 건물 등장 효과 재생
+    IEnumerator StructureScaleUp(GameObject structure)
+    {
+        Vector3 startScale = Vector3.zero;
+        Vector3 endScale = Vector3.one;
+
+        float elapsedTime = 0f;
+        float activeStructureDuration = 1f;
+
+        while(elapsedTime < activeStructureDuration)
+        {
+            structure.transform.localScale = Vector3.Lerp(startScale, endScale, elapsedTime / activeStructureDuration);
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        structure.transform.localScale = endScale;
     }
 
     // 몇 초간 바이트가 0으로 유지되는지 확인

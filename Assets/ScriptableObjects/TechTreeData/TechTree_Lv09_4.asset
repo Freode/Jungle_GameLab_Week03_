@@ -21,5 +21,6 @@ MonoBehaviour:
   nextSkills:
   - {fileID: 11400000, guid: 7bac0bda33acaa14c8e112daec14cc0b, type: 2}
   lineModify: 0
-  positionUI: {x: 2250, y: 150}
-  effects: []
+  positionUI: {x: 2100, y: 150}
+  effects:
+  - {fileID: 11400000, guid: 73e6245326c0a884ea47746c829f5454, type: 2}

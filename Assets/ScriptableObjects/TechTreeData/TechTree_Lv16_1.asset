@@ -15,12 +15,12 @@ MonoBehaviour:
   techName: 130
   techNamePrint: "\uB4DC\uB9B4 \uB0B4\uAD6C\uB3C4 2"
   description: "\uBC14\uC774\uD2B8 \uC800\uC7A5\uB7C9 \uC99D\uAC00"
-  requiredByteValue: 3000
+  requiredByteValue: 2500
   preRequisites:
   - {fileID: 11400000, guid: 026fbea4d24c42143905505ab2fbbbb3, type: 2}
   nextSkills:
   - {fileID: 11400000, guid: 07aa3f2ad2a2815429e0bfa4d84a9939, type: 2}
   lineModify: 0
-  positionUI: {x: 5250, y: -300}
+  positionUI: {x: 4200, y: -300}
   effects:
   - {fileID: 11400000, guid: 81723734356b7c14886c8ca2eb35431a, type: 2}
