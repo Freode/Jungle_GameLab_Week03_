@@ -10,6 +10,7 @@ public class TravelUI : MonoBehaviour
     public Button Desolo;
     public Button Glacio;
     public Button Atrox;
+    public Image imageBlock;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -49,12 +50,14 @@ public class TravelUI : MonoBehaviour
     // 우주 여행 UI 닫기
     public void OnExitTravelUI()
     {
+        imageBlock.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 
     // 우주 여행 버튼 누름
     public void OnTravelEvent(Planet planet)
     {
+        imageBlock.gameObject.SetActive(true);
         GameManager.instance.SetCurrentPlanet(planet);
         ChangeCurStageText();
     }

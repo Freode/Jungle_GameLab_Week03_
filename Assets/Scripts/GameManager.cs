@@ -44,6 +44,9 @@ public class GameManager : MonoBehaviour
     private bool canGoGlaclo = false;       // 글라시오로 이동 가능 여부
     private bool canGoAtrox = false;        // 아트록스로 이동 가능 여부
 
+    // 코어 구매 목록들
+    private List<bool> corePurchaseList = new List<bool>(4);
+
     private void Awake()
     {
         instance = this;
@@ -158,6 +161,30 @@ public class GameManager : MonoBehaviour
         OnPlanetChanged?.Invoke();
     }
 
+    // 코어 구매 전송
+    public void PurchaseCore(Planet plaentCore)
+    {
+        int idx = (int)plaentCore;
+        corePurchaseList[idx] = true;
+
+        // 모두 구매했는지 확인
+        bool result = true;
+        foreach(bool corePurchaseEach in corePurchaseList)
+        {
+            if(corePurchaseEach == false)
+            {
+                result = false;
+                break;
+            }
+        }
+
+        // 게임 클리어
+        if(result)
+        {
+            Debug.Log("게임 클리어!");
+        }
+    }
+
     // 몇 초간 바이트가 0으로 유지되는지 확인
     private void CheckByteZero()
     {
@@ -175,6 +202,7 @@ public class GameManager : MonoBehaviour
     // 게임 오버
     private void GameOver()
     {
+        Debug.Log("게임 오버!");
         isGameOver = true;
         Time.timeScale = 0f;
     }
