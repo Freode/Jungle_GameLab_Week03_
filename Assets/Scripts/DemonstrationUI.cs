@@ -54,8 +54,6 @@ public class DemonstrationUI : MonoBehaviour
         float screenWidth = Screen.width;
         float screenHeight = Screen.height;
 
-        Debug.Log(buttonCorners[2]);
-
         float rightX = buttonCorners[2].x + weight;
         float downY = buttonCorners[2].y + height;
 

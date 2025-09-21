@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d02f66281d5b1cf40a9049c1201a1dff, type: 3}
+  m_Name: TechTree_Lv17_3
+  m_EditorClassIdentifier: 
+  techName: 135
+  techNamePrint: "\uB4DC\uB9B4 \uBAA8\uB4C8 5"
+  description: "\uBC14\uC774\uD2B8 \uBC1C\uACAC \uCD5C\uC18C \uC8FC\uAE30 0\uCD08\uB85C
+    \uACE0\uC815\\n\uBC14\uC774\uD2B8 \uBC1C\uACAC \uCD5C\uB300 \uC8FC\uAE30 5\uCD08
+    \uAC10\uC18C"
+  requiredByteValue: 4500
+  preRequisites:
+  - {fileID: 11400000, guid: 773e80b55fc680e4ca9f6c7083e532cf, type: 2}
+  nextSkills: []
+  lineModify: 0
+  positionUI: {x: 4500, y: 0}
+  effects:
+  - {fileID: 11400000, guid: d5c4f550921b0d44ba0c42933ae32228, type: 2}
+  - {fileID: 11400000, guid: 33c5c09e89b11f74daef8db02ac3602b, type: 2}

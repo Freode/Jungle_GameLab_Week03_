@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d02f66281d5b1cf40a9049c1201a1dff, type: 3}
-  m_Name: TechTree_Lv10_4
+  m_Name: TechTree_Lv18_1
   m_EditorClassIdentifier: 
-  techName: 115
-  techNamePrint: "\uC911\uD615 \uC6B0\uC8FC\uC120"
-  description: "\uB370\uC194\uB85C\uB85C \uC774\uB3D9 \uAC00\uB2A5"
-  requiredByteValue: 200
+  techName: 136
+  techNamePrint: "\uB4DC\uB9B4 \uB0B4\uAD6C\uB3C4 4"
+  description: "\uBC14\uC774\uD2B8 \uCD5C\uB300 \uBC1C\uACAC\uB7C9 50% \uC99D\uAC00"
+  requiredByteValue: 5000
   preRequisites:
-  - {fileID: 11400000, guid: 8e6683ba923c0dc4dad5cde98381617e, type: 2}
+  - {fileID: 11400000, guid: 07aa3f2ad2a2815429e0bfa4d84a9939, type: 2}
   nextSkills: []
   lineModify: 0
-  positionUI: {x: 2400, y: 150}
+  positionUI: {x: 4800, y: -300}
   effects:
-  - {fileID: 11400000, guid: b19ad53ed79c21d4c81f82af7e9e672e, type: 2}
-  - {fileID: 11400000, guid: 5d5d83107fb638945a995d8b23d787d6, type: 2}
+  - {fileID: 11400000, guid: c1e6118c7eb92f94893edf340799dd85, type: 2}

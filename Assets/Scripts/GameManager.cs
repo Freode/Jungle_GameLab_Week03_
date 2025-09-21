@@ -2,6 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public enum Planet
 { 
@@ -22,6 +28,7 @@ public class GameManager : MonoBehaviour
     public event System.Action OnDemonstrationInactive;
     public event System.Action<int, int> OnByteTextValueChanged;
     public event System.Action OnPlanetChanged;
+    public event System.Action<bool> OnGameClear;
 
     public List<int> reduceBytes;           // 행성에 따른 바이트 소모량 차별화
     public float byteZeroTimeLimit = 15f;   // 바이트가 0으로 유지되는 한계점
@@ -31,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     private Planet stage = Planet.Sylva;    // 현재 스테이지
     private string stageName = "실바";      // 현재 스테이지의 이름
-    private int curByteValue = 60;          // 현재 바이트 소유량
+    private int curByteValue = 30;          // 현재 바이트 소유량
     private int maxByteValue = 150;         // 최대 바이트 소유량
     private float byteZeroTime = 0f;        // 바이트가 0으로 유지되는 시간
 
@@ -175,7 +182,7 @@ public class GameManager : MonoBehaviour
                 stageName = "실바";
                 break;
             case Planet.Desolo:
-                stageName = "데슬로";
+                stageName = "데솔로";
                 break;
             case Planet.Glacio:
                 stageName = "글라시오";
@@ -212,7 +219,7 @@ public class GameManager : MonoBehaviour
         // 게임 클리어
         if (result)
         {
-            Debug.Log("게임 클리어!");
+            GameClear(true);
         }
     }
 
@@ -262,6 +269,22 @@ public class GameManager : MonoBehaviour
         OnDemonstrationInactive?.Invoke();
     }
 
+    // 게임 종료
+    public void GameQuit()
+    {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
+    // 게임 재시작
+    public void GameRestart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     // 몇 초간 바이트가 0으로 유지되는지 확인
     private void CheckByteZero()
     {
@@ -273,15 +296,15 @@ public class GameManager : MonoBehaviour
 
         // 한계값보다 오래 지속되면, 게임 오버
         if (byteZeroTime >= byteZeroTimeLimit)
-            GameOver();
+            GameClear(false);
     }
 
-    // 게임 오버
-    private void GameOver()
-    {
-        Debug.Log("게임 오버!");
+    // 게임 클리어 여부에 따라 출력
+    public void GameClear(bool isClear)
+    {;
         isGameOver = true;
         Time.timeScale = 0f;
+        OnGameClear?.Invoke(isClear);
     }
 
 

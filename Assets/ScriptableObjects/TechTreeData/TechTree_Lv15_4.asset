@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   techName: 129
   techNamePrint: "\uC7AC\uC0AC\uC6A9 \uCD94\uC9C4\uAE30"
-  description: "\uBC14\uC774\uD2B8 \uC800\uC7A5\uB7C9 \uC99D\uAC00"
+  description: "\uC544\uD2B8\uB85D\uC2A4 \uD0D0\uC0AC \uAE30\uCD08 \uC791\uC5C5"
   requiredByteValue: 1500
   preRequisites:
   - {fileID: 11400000, guid: 75eb05bd9ee9e8d45b45af221c23404c, type: 2}

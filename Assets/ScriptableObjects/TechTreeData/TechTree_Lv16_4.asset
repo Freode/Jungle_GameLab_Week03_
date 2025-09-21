@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02f66281d5b1cf40a9049c1201a1dff, type: 3}
   m_Name: TechTree_Lv16_4
   m_EditorClassIdentifier: 
-  techName: 132
+  techName: 133
   techNamePrint: "\uCD08\uB300\uD615 \uC6B0\uC8FC\uC120"
-  description: "\uBC14\uC774\uD2B8 \uC800\uC7A5\uB7C9 \uC99D\uAC00"
+  description: "\uC544\uD2B8\uB85D\uC2A4\uB85C \uC774\uB3D9 \uAC00\uB2A5"
   requiredByteValue: 2750
   preRequisites:
   - {fileID: 11400000, guid: 06e5b5bfe1b5df24fbeeb9b08c0c2772, type: 2}
