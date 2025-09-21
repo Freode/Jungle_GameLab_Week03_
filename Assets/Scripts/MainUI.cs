@@ -5,7 +5,6 @@ using System.Collections;
 
 public class MainUI : MonoBehaviour
 {
-
     public TextMeshProUGUI byteText;
     public TextMeshProUGUI planetText;
 

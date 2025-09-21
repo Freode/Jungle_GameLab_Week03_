@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   techName: 101
   techNamePrint: "\uD14C\uB354"
-  description: "\uAD6C\uC5ED \uD655\uC7A5"
+  description: "\uB2E4\uC74C \uB2E8\uACC4\uB97C \uC5F0\uAD6C\uD558\uAE30 \uC704\uD55C
+    \uAE30\uCD08\uC801\uC778 \uB2E8\uACC4\uC785\uB2C8\uB2E4."
   requiredByteValue: 10
   preRequisites: []
   nextSkills:

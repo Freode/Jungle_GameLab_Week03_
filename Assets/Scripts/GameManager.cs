@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
 
     public bool isTestMode = false;         // 테스트 모드
 
+    public event System.Action<DemonstartionInfo, RectTransform> OnDemonstrationActive;
+    public event System.Action OnDemonstrationInactive;
     public event System.Action<int, int> OnByteTextValueChanged;
     public event System.Action OnPlanetChanged;
 
@@ -80,7 +82,7 @@ public class GameManager : MonoBehaviour
         structures = new List<GameObject>();
         int count = structureParent.transform.childCount;
 
-        for(int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)
         {
             Transform child = structureParent.transform.GetChild(i);
             structures.Add(child.gameObject);
@@ -167,7 +169,7 @@ public class GameManager : MonoBehaviour
             return;
 
         SetStage(newPlanet);
-        switch(newPlanet)
+        switch (newPlanet)
         {
             case Planet.Sylva:
                 stageName = "실바";
@@ -198,9 +200,9 @@ public class GameManager : MonoBehaviour
 
         // 모두 구매했는지 확인
         bool result = true;
-        foreach(bool corePurchaseEach in corePurchaseList)
+        foreach (bool corePurchaseEach in corePurchaseList)
         {
-            if(corePurchaseEach == false)
+            if (corePurchaseEach == false)
             {
                 result = false;
                 break;
@@ -208,7 +210,7 @@ public class GameManager : MonoBehaviour
         }
 
         // 게임 클리어
-        if(result)
+        if (result)
         {
             Debug.Log("게임 클리어!");
         }
@@ -217,7 +219,7 @@ public class GameManager : MonoBehaviour
     // 활성화된 건물 등장 효과 실행
     public void ActiveStructures(GameObject structurePrefab)
     {
-        foreach(GameObject structure in structures)
+        foreach (GameObject structure in structures)
         {
             if (structure.name.Contains(structurePrefab.name) == false)
                 continue;
@@ -237,7 +239,7 @@ public class GameManager : MonoBehaviour
         float elapsedTime = 0f;
         float activeStructureDuration = 1f;
 
-        while(elapsedTime < activeStructureDuration)
+        while (elapsedTime < activeStructureDuration)
         {
             structure.transform.localScale = Vector3.Lerp(startScale, endScale, elapsedTime / activeStructureDuration);
             elapsedTime += Time.deltaTime;
@@ -246,6 +248,18 @@ public class GameManager : MonoBehaviour
         }
 
         structure.transform.localScale = endScale;
+    }
+
+    // 설명 UI 출력
+    public void ActiveDemonstration(DemonstartionInfo info, RectTransform baseTransform)
+    {
+        OnDemonstrationActive?.Invoke(info, baseTransform);
+    }
+
+    // 설명 UI 비출력
+    public void InactiveDemonstration()
+    {
+        OnDemonstrationInactive?.Invoke();
     }
 
     // 몇 초간 바이트가 0으로 유지되는지 확인
@@ -269,6 +283,7 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         Time.timeScale = 0f;
     }
+
 
     // ==============================================
     //                  수치 변경

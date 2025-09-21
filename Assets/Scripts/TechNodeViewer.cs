@@ -59,6 +59,11 @@ public class TechNodeViewer : MonoBehaviour
             // 위치 지정
             nodeGameObject.GetComponent<RectTransform>().anchoredPosition = techNodeData.positionUI;
 
+            // 설명서 정보 대입
+            DemonstartionInfo nodeGameObjectDI = nodeGameObject.AddComponent<DemonstartionInfo>();
+            nodeGameObjectDI.title = techNodeData.techNamePrint;
+            nodeGameObjectDI.context = techNodeData.description;
+
             TechNodeUI nodeUI = nodeGameObject.GetComponent<TechNodeUI>();
             nodeUI.SetData(techNodeData);
 
