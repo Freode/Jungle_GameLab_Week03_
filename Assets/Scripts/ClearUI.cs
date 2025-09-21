@@ -19,6 +19,7 @@ public class ClearUI : MonoBehaviour
 
     public void SetClear(bool isClear)
     {
+        gameObject.SetActive(true);
         textTitle.text = isClear ? "클리어!" : "실패!";
     }
 }
