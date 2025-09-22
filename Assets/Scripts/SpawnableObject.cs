@@ -72,19 +72,29 @@ public class SpawnableObject : MonoBehaviour
         if (canInteract == false)
             return;
 
+        // 게임 일시 정지 시, 상호작용 불가능하도록 설정
+        if (Time.timeScale <= 0.1f)
+            return;
+
         int stageNum = (int)GameManager.instance.GetStage();
         switch (spawnType)
         {
             // 자원 - 바이트 획득
             case SpawnType.Resource:
                 // 공식
-                // 최소 바이트 = (행성 바이트 + 바이트 추가 획득) * 바이트 추가 획득 / 2
+                // 최소 바이트 = (행성 바이트 + 바이트 추가 획득) * 바이트 추가 획득 * 0.8
                 // 최대 바이트 = (행성 바이트 + 바이트 추가 획득) * 바이트 추가 획득
                 int percent = GameManager.instance.GetFindBytesRate();
                 int minValue = interactByteValue[stageNum] + GameManager.instance.GetIncreaseFindByteMinValue();
                 int maxValue = minValue + (minValue * percent / 100);
-                minValue = (minValue + maxValue) / 2;
+                minValue = minValue + (minValue * percent / 100 / 10 * 8);
                 int addValue = Random.Range(minValue, maxValue + 1);
+
+                // 최대 자원량이 넘지 않도록 조정
+                int curByte = GameManager.instance.GetCurByteValue();
+                int maxByte = GameManager.instance.GetMaxByteValue();
+                addValue = Mathf.Min(addValue, maxByte - curByte);
+
                 OnObjectClicked?.Invoke(addValue);
                 GameManager.instance.AddCurByteValue(addValue);
                 break;

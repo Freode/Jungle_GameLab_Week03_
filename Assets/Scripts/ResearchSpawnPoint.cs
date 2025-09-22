@@ -111,7 +111,7 @@ public class ResearchSpawnPoint : MonoBehaviour
     {
         string inputText;
         
-        if(value > 0)
+        if(value >= 0)
         {
             inputText = "+" + value.ToString();
             valueText.color = Color.green;

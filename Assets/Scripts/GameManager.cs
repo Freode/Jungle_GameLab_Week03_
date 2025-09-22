@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour
     public CanvasGroup fadeCanvasGroup;     // 페이드 인-아웃 효과 때, 상호작용하지 않을 UI
 
     public List<int> reduceBytes;           // 행성에 따른 바이트 소모량 차별화
-    public float byteZeroTimeLimit = 15f;   // 바이트가 0으로 유지되는 한계점
+    public float byteZeroTimeLimit = 7f;    // 바이트가 0으로 유지되는 한계점
 
     public GameObject planetFloor;          // 행성 바닥
     public List<Material> planetMaterials;  // 행성 바닥 머티리얼
@@ -50,8 +51,8 @@ public class GameManager : MonoBehaviour
     private int reduceBytesCoverValue = 0;  // 현재 감소량 커버할 수 있는 양
     private int increaseBytesValue = 0;     // 매 초마다 증가하는 바이트 양
     private int findBytesRate = 0;          // 바이트 발견 시, 발견량을 최대 n% 증가
-    private float findByteMinPeriod = 10f;  // 바이트 최소 발견 주기
-    private float findByteMaxPeriod = 30f;  // 바이트 최대 발견 주기
+    private float findByteMinPeriod = 5f;  // 바이트 최소 발견 주기
+    private float findByteMaxPeriod = 15f;  // 바이트 최대 발견 주기
     private int increaseFindBytMinValue = 0;// 바이트 최소 발견량 증가
     private bool canGoDesolo = false;       // 데솔로로 이동 가능 여부
     private bool canGoGlaclo = false;       // 글라시오로 이동 가능 여부
@@ -61,8 +62,12 @@ public class GameManager : MonoBehaviour
     public GameObject structureParent;      // 구조물의 부모 프리팹
     private List<GameObject> structures;    // 활성화할 구조물 목록들
 
+    public Volume dangerPostProcessVolume;  // 위험한 상태를 알려주는 post process volume
+    private Vignette vignette;              // 위험 상태를 직접 출력하는 곳
+
     private void Awake()
     {
+        Time.timeScale = 1f;
         instance = this;
         SetTestMode();
     }
@@ -83,6 +88,9 @@ public class GameManager : MonoBehaviour
         StartCoroutine(Init());
 
         findAllStructures();
+
+        // Vignette 가져오기
+        dangerPostProcessVolume.profile.TryGet(out vignette);
     }
 
     // 모든 구조물을 찾기
@@ -340,9 +348,16 @@ public class GameManager : MonoBehaviour
     {
         // 바이트가 0 이하로 유지되는 시간 측정
         if (curByteValue <= 0)
+        {
             byteZeroTime += Time.deltaTime;
+            SetDanger(byteZeroTime);
+        }
         else
+        {
+            if (byteZeroTime != 0)
+                SetDanger(0);
             byteZeroTime = 0f;
+        }
 
         // 한계값보다 오래 지속되면, 게임 오버
         if (byteZeroTime >= byteZeroTimeLimit)
@@ -355,6 +370,13 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         Time.timeScale = 0f;
         OnGameClear?.Invoke(isClear);
+    }
+
+    // 위험에 따라 강조 정도를 다르게 하기
+    private void SetDanger(float danger)
+    {
+        float dangerLevel = danger / byteZeroTimeLimit;
+        vignette.intensity.value = dangerLevel;
     }
 
 

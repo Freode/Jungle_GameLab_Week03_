@@ -63,9 +63,16 @@ public class TravelUI : MonoBehaviour
     // 우주 여행 버튼 누름
     public void OnTravelEvent(Planet planet)
     {
+        // 현재 행성과 같은 행성으로 여행할 경우, 무시
+        Planet curPlanet = GameManager.instance.GetStage();
+        if (curPlanet == planet)
+            return;
+
         imageBlock.gameObject.SetActive(true);
         GameManager.instance.SetCurrentPlanet(planet);
         ChangeCurStageText();
+        OnExitTravelUI();
+        GameManager.instance.InactiveDemonstration();
     }
 
     // 버튼 클릭
