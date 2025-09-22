@@ -16,7 +16,6 @@ public class DemonstartionInfo : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("버튼에 마우스 올리기");
         GameManager.instance.ActiveDemonstration(this, rectTransform);
     }
 

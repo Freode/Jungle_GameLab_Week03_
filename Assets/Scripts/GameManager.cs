@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
     public event System.Action OnPlanetChanged;
     public event System.Action<bool> OnGameClear;
 
+    public CanvasGroup fadeCanvasGroup;     // 페이드 인-아웃 효과 때, 상호작용하지 않을 UI
+
     public List<int> reduceBytes;           // 행성에 따른 바이트 소모량 차별화
     public float byteZeroTimeLimit = 15f;   // 바이트가 0으로 유지되는 한계점
 
@@ -175,6 +177,31 @@ public class GameManager : MonoBehaviour
         if (stage == newPlanet)
             return;
 
+        // 페이드 효과 실행
+        StartCoroutine(FadeRoutine(newPlanet));
+    }
+
+    // 페이드 효과 코루틴 실행
+    IEnumerator FadeRoutine(Planet newPlanet)
+    {
+        float elapsedTime = 0f;
+        float fadeStartDuration = 0.5f;
+        float fadeConsistDuration = 0.3f;
+
+        // 페이드 중 클릭 방지
+        fadeCanvasGroup.blocksRaycasts = true;
+
+        // 페이드 아웃
+        while(elapsedTime <= fadeStartDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float newAlpha = Mathf.Lerp(0f, 1f, elapsedTime / fadeStartDuration);
+            fadeCanvasGroup.alpha = newAlpha;
+            yield return null;
+        }
+        fadeCanvasGroup.alpha = 1f;
+
+        // 행성 교체 - 정보 변경
         SetStage(newPlanet);
         switch (newPlanet)
         {
@@ -192,11 +219,34 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        // 행성 바닥 색상 변경
+        // 행성 교체 - 바닥 머티리얼 변경
         MeshRenderer meshRenderer = planetFloor.GetComponent<MeshRenderer>();
         meshRenderer.material = planetMaterials[(int)stage];
 
+        // 행성 교체 - 행성 교체와 관련된 함수 호출
         OnPlanetChanged?.Invoke();
+
+        // 페이드 지속
+        elapsedTime = 0f;
+        while (elapsedTime <= fadeConsistDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // 페이드 인
+        elapsedTime = 0f;
+        while (elapsedTime <= fadeStartDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float newAlpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeStartDuration);
+            fadeCanvasGroup.alpha = newAlpha;
+            yield return null;
+        }
+        fadeCanvasGroup.alpha = 0f;
+
+        // 페이드 효과 종료
+        fadeCanvasGroup.blocksRaycasts = false;
     }
 
     // 코어 구매 전송

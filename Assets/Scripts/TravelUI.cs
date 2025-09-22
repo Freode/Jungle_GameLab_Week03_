@@ -20,8 +20,14 @@ public class TravelUI : MonoBehaviour
         Glacio.onClick.AddListener(OnGlacioClicked);
         Atrox.onClick.AddListener(OnAtroxClicked);
         Exit.onClick.AddListener(OnExitTravelUI);
+
+        GameManager.instance.OnPlanetChanged += ChangeCurStageText;
     }
 
+    private void OnDestroy()
+    {
+        GameManager.instance.OnPlanetChanged -= ChangeCurStageText;
+    }
 
     // 우주 여행 UI 활성화
     public void OnActiveTravelUI()

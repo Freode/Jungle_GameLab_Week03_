@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
+using TMPro;
 
 [System.Serializable]
 public struct SpawnInfo
@@ -13,6 +15,8 @@ public struct SpawnInfo
 public class ResearchSpawnPoint : MonoBehaviour
 {
     public List<SpawnInfo> spawnLists;
+    public TextMeshProUGUI valueText;
+    public Image imageValue; 
 
     private int totalRate = 0;
 
@@ -25,7 +29,25 @@ public class ResearchSpawnPoint : MonoBehaviour
             totalRate += spawnlist.spawnRate;
         }
 
+        // 30% 확률로 스폰
+        int firstSpawnRate = Random.Range(0, 100);
+        if (firstSpawnRate <= 30)
+            SpawnResearchResource();
+
+        InitValueText();
         StartCoroutine(WaitToRemove());
+    }
+
+    // 값 텍스트 출력 초기 설정
+    void InitValueText()
+    {
+        Camera mainCamera = Camera.main;
+
+        Vector3 worldPosition = transform.position;
+        Vector2 screentPosition = mainCamera.WorldToScreenPoint(worldPosition);
+
+        RectTransform rectTransform = imageValue.GetComponent<RectTransform>();
+        rectTransform.position = screentPosition;
     }
 
     // 스폰 활성화까지 확인
@@ -33,12 +55,12 @@ public class ResearchSpawnPoint : MonoBehaviour
     {
         while(true)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return null;
 
             int validObject = transform.childCount;
 
-            // 자식이 없으면, 스폰 대기에 추가
-            if (validObject == 0)
+            // 자식이 text밖에 없으면, 스폰 대기에 추가
+            if (validObject == 1)
                 break;
         }
 
@@ -79,6 +101,45 @@ public class ResearchSpawnPoint : MonoBehaviour
 
         // 프리팹 스폰하기
         GameObject resource = Instantiate(selectInfo.spawnPrefab, transform);
+        SpawnableObject spawnableObject = resource.GetComponent<SpawnableObject>();
+        spawnableObject.OnObjectClicked += PrintValue;
         resource.transform.localPosition = Vector3.zero;
+    }
+
+    // 얻는 값을 화면에 출력
+    private void PrintValue(int value)
+    {
+        string inputText;
+        
+        if(value > 0)
+        {
+            inputText = "+" + value.ToString();
+            valueText.color = Color.green;
+        }
+        else
+        {
+            inputText = value.ToString();
+            valueText.color= Color.red;
+        }
+
+        valueText.text = inputText;
+
+        StartCoroutine(PrintValueDuration());
+    }
+
+    // 값을 출력하는 시간
+    IEnumerator PrintValueDuration()
+    {
+        float timer = 0.5f;
+        float cur = 0f;
+        imageValue.gameObject.SetActive(true);
+
+        while(cur <= timer)
+        {
+            cur += Time.deltaTime;
+            yield return null;
+        }
+
+        imageValue.gameObject.SetActive(false);
     }
 }

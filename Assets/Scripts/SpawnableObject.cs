@@ -12,6 +12,8 @@ public enum SpawnType
 
 public class SpawnableObject : MonoBehaviour
 {
+    public event System.Action<int> OnObjectClicked;
+
     public SpawnType spawnType;                 // 현재 스폰될 객체의 타입
     public List<int> interactByteValue;         // 상호작용 시, 획득할 바이트의 양
 
@@ -30,12 +32,6 @@ public class SpawnableObject : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnAnimate());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     // 스폰된 객체 성장하는 애니메이션
@@ -89,6 +85,7 @@ public class SpawnableObject : MonoBehaviour
                 int maxValue = minValue + (minValue * percent / 100);
                 minValue = (minValue + maxValue) / 2;
                 int addValue = Random.Range(minValue, maxValue + 1);
+                OnObjectClicked?.Invoke(addValue);
                 GameManager.instance.AddCurByteValue(addValue);
                 break;
 
@@ -98,7 +95,9 @@ public class SpawnableObject : MonoBehaviour
 
             // 위험 - 바이트 소멸
             case SpawnType.Danger:
-                GameManager.instance.AddCurByteValue(-1 * interactByteValue[stageNum]);
+                int minusValue = -1 * interactByteValue[stageNum];
+                OnObjectClicked?.Invoke(minusValue);
+                GameManager.instance.AddCurByteValue(minusValue);
                 break;
         }
   
